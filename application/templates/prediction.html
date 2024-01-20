@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/static/style.css">
+  <style>
+    body {
+      background-color: #1a1a1a;
+      color: #ffffff;
+      padding: 50px;
+      display: block;
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6 form-container">
+        <a href="/"><button style="background-color: black;color: white;">Go back</button></a>
+        <form method="POST">
+          <div class="form-group">
+            <label for="numberInput">Expected service charge if available:</label>
+            <input type="number" class="form-control" name="servicecharge" step="0.01" placeholder="Enter service charge">
+          </div>
+
+          <div class="form-group">
+            <label>Balcony :</label>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="balcony" id="radioOption1" value="1" required>
+              <label class="form-check-label" for="radioOption1">Yes</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="balcony" id="radioOption2" value="0" required>
+              <label class="form-check-label" for="radioOption2">No</label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="numberInput">Approximate number of pictures of building in the listing :</label>
+            <input type="number" class="form-control" name="picturecount" placeholder="Usually between 0 and 150" required min="0" max="150">
+          </div>
+
+          <div class="form-group">
+            <label for="numberInput">Price trend as calculated by Immoscout :</label>
+            <input type="number" class="form-control" name="pricetrend" step="0.01" placeholder="Enter value between -15 and 15" required min="-15" max="15">
+          </div>
+
+          <div class="form-group">
+            <label>Has Kitchen :</label>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="kitchen" id="radioOption1" value="1" required>
+              <label class="form-check-label" for="radioOption1">Yes</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="kitchen" id="radioOption2" value="0" required>
+              <label class="form-check-label" for="radioOption2">No</label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="numberInput">Range of the year the building was constructed(1:really old(1000-..) - 9:resently build(..-2023)),Assume a 100 year difference between each bin(1-9) :</label>
+            <input type="number" class="form-control" name="yearconstructedrange" placeholder="Enter a value between 1 and 9" required min="1" max="9">
+          </div>
+
+
+          <div class="form-group">
+            <label for="selectInput">Select District :</label>
+            <select class="form-control" id="geo_krs" name="district">
+              {% for district,value in districts.items() %}
+                <option value="{{value}}">{{district}}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="numberInput">ZIP Code :</label>
+            <input type="number" class="form-control" name="zipcode" placeholder="usually a 4-5 digit number" min="1000" max="99999">
+          </div>
+
+          <div class="form-group">
+            <label for="selectInput">Select City :</label>
+            <select class="form-control" id="geo_krs" name="city">
+              {% for city,value in cities.items() %}
+                <option value="{{value}}">{{city}}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="selectInput">Select Firing Type :</label>
+            <select class="form-control" id="firingtype" name="firingtype">
+              {% for firingtype,value in firingtypes.items() %}
+                <option value="{{value}}">{{firingtype}}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="selectInput">Select Heating Type :</label>
+            <select class="form-control" id="heatingtype" name="heatingtype">
+              {% for heatingtype,value in heatingtypes.items() %}
+                <option value="{{value}}">{{heatingtype}}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="selectInput">Select the Federal state :</label>
+            <select class="form-control" id="fedaral" name="fedaral">
+              {% for federal,value in federals.items() %}
+                <option value="{{value}}">{{federal}}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="selectInput">Select the Condition of the building : </label>
+            <select class="form-control" id="condition" name="condition">
+              {% for condition,value in conditions.items() %}
+                <option value="{{value}}">{{condition}}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="selectInput">Select the Type of flat :</label>
+            <select class="form-control" id="typeofflat" name="typeofflat">
+              {% for type,value in typeofflat.items() %}
+                <option value="{{value}}">{{type}}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Predict</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>

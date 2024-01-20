@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/static/style.css">
+  <style>
+    body {
+      background-color: #474747;
+      color: #ffffff;
+      padding: 50px;
+      display: block;
+      margin-top: -20px;
+    }
+
+  </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-6 form-container">
+            <a href="/"><button style="background-color: black;color: white;">Go back</button></a>
+            <form method="POST" id="myForm">
+            
+              <div class="form-group">
+                <label for="selectInput">Select the City to see the rental offers across each region :</label>
+                <select class="form-control" id="city" name="city">
+                  {% for city in cities %}
+                    <option value="{{city}}">{{city}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+
+    
+              <button id="subbtn" type="submit" class="btn btn-primary">Check</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div id="loader" class="row" style="justify-content: center; margin-top: 150px; display: none;">
+        <div class="pulsing"></div>
+      </div>
+      <div id="map" class="row" style=" justify-content: center;">
+        <div class="col-md-6 image-container hover-effect1">
+            <img src="/static/graph1.png" alt="Not Available" class="img-fluid">
+      </div>
+
+      <script>
+        document.getElementById('myForm').addEventListener('submit',function (event) {
+          event.preventDefault();
+
+          document.getElementById('subbtn').disabled = true;
+          document.getElementById('map').style.display = 'none';
+          document.getElementById('loader').style.display = 'flex';
+          
+
+          var formdata = new FormData(event.target);
+
+          fetch('/region_count',{
+            method: 'POST',
+            body: formdata,
+          })
+          .then(response => response.json())
+          .then(data => {
+
+          setTimeout(function () {
+              document.getElementById('loader').style.display = 'none';
+              document.getElementById('map').style.display = 'flex';
+              document.getElementById('subbtn').disabled = false;
+              location.reload();
+              
+              
+          },1000);
+        })
+        });
+      </script>  
+
+</body>
+</html>

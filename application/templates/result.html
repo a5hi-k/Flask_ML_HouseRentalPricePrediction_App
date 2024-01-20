@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h4 style="text-align: center;">The Expected Rental Price Per Month</h4>
+                    <div id="animated-value" class="area responsive-anim">0</div>
+                </div>
+            </div>
+            <div class="col-md-12 btn-container" style="text-align: center; margin-top: 5%;">
+               <a href="/prediction"><button class="button">Make Another Prediction</button></a> 
+               <a href="/"><button class="button">Go Home</button></a>
+               
+              </div>
+        </div>
+        <script>
+            window.onload = function(){
+                var audio = new Audio('/static/sound1.mp3');
+                audio.volume=0.09;
+                audio.play();
+            };
+
+            document.addEventListener('DOMContentLoaded', function() {
+        const animatedValue = document.getElementById('animated-value');
+        const targetValue = `{{ predicted_value|tojson|safe }}`; 
+
+        let currentValue = 0;
+        const interval = setInterval(function() {
+            animatedValue.textContent = currentValue + ' €';
+            currentValue++;
+
+            if (currentValue > targetValue) {
+                clearInterval(interval);
+                animatedValue.textContent = targetValue + ' €';
+            }
+        }, 0.2);  
+    });
+        </script>
+</body>
+</html>
