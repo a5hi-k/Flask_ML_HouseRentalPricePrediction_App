@@ -3,7 +3,7 @@ from application.controllers import app
 
 
 
-
+app = app
 
 
 # hiding for production version
