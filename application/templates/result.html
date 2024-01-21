@@ -3,9 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Result</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/style.css">
+
+
+    <script>
+        window.onload = function(){
+            var audio = new Audio('/static/sound1.mp3');
+            audio.volume=0.09;
+            audio.play();
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+    const animatedValue = document.getElementById('animated-value');
+    const targetValue = `{{ predicted_value|tojson|safe }}`; 
+
+    let currentValue = 0;
+    const interval = setInterval(function() {
+        animatedValue.textContent = currentValue + ' €';
+        currentValue++;
+
+        if (currentValue > targetValue) {
+            clearInterval(interval);
+            animatedValue.textContent = targetValue + ' €';
+            }
+        }, 0.2);  
+        });
+    </script>
+
+
+
+
+
 </head>
 <body>
         <div class="container">
@@ -21,28 +51,6 @@
                
               </div>
         </div>
-        <script>
-            window.onload = function(){
-                var audio = new Audio('/static/sound1.mp3');
-                audio.volume=0.09;
-                audio.play();
-            };
 
-            document.addEventListener('DOMContentLoaded', function() {
-        const animatedValue = document.getElementById('animated-value');
-        const targetValue = `{{ predicted_value|tojson|safe }}`; 
-
-        let currentValue = 0;
-        const interval = setInterval(function() {
-            animatedValue.textContent = currentValue + ' €';
-            currentValue++;
-
-            if (currentValue > targetValue) {
-                clearInterval(interval);
-                animatedValue.textContent = targetValue + ' €';
-            }
-        }, 0.2);  
-    });
-        </script>
 </body>
 </html>
